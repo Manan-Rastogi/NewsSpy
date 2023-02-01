@@ -360,7 +360,7 @@ export default class News extends Component {
                   <NewsItem
                     title={element.title.length > 40 ? element.title.slice(0, 40) + "...":  element.title}
                     description={element.description.length > 97 ? element.description.slice(0, 97) + "...":  element.description}
-                    img={element.urlToImage === null ? 'https://github.com/Manan-Rastogi/NewsSpy/blob/master/src/Images/NoPreview.jpg' : element.urlToImage}
+                    img={element.urlToImage === null ? require("../Images/NoPreview.jpg") : element.urlToImage}
                     url={element.url}
                   />
                 </div>
