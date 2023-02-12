@@ -17,6 +17,7 @@ export default class App extends Component {
               path="/"
               element={<News pagesize={20} country="in" category="general" />}
             />
+            {/* Concept: Using key here will force rerendering */}
             <Route
               exact
               path="/business"
