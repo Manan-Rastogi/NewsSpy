@@ -1,10 +1,24 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner"
+import PropTypes from 'prop-types'
+
 
 export default class News extends Component {
+  static defaultProps = {
+    country: "in",
+    pagesize: 20,
+    category: "general"
+  }
+ 
+  static propTypes = {
+    country: PropTypes.string,
+    pagesize: PropTypes.number,
+    category: PropTypes.string,
+  }
+  
+  
   articles = [];
-
   constructor() {
     super();
     // Setting State in class based components
@@ -22,7 +36,7 @@ export default class News extends Component {
     this.setState({
       loading: true,
     })
-    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${this.state.page}&pagesize=${this.props.pagesize}`;
+    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${this.state.page}&pagesize=${this.props.pagesize}`;
     let data = await fetch(apiUrl);
     let parsedData = await data.json();
 
@@ -38,7 +52,7 @@ export default class News extends Component {
     this.setState({
       loading: true,
     })
-    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${
+    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${
       this.state.page > 1 ? this.state.page - 1 : this.state.page
     }&pagesize=${this.props.pagesize}`;
     let data = await fetch(apiUrl);
@@ -54,7 +68,7 @@ export default class News extends Component {
     this.setState({
       loading: true,
     })
-    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${
+    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${
       Math.ceil(this.state.totalResults / this.props.pagesize) >= this.state.page + 1
         ? this.state.page + 1
         : this.state.page
