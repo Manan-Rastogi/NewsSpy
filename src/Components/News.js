@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
-import Spinner from "./Spinner";
 import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from "./Spinner";
 
 export default class News extends Component {
   static defaultProps = {
@@ -26,8 +27,6 @@ export default class News extends Component {
       page: 1,
       totalResults: 0,
     };
-
-    
   }
 
   handlePages = async (pages) => {
@@ -48,43 +47,68 @@ export default class News extends Component {
       loading: true,
     });
     this.handlePages(1);
-    document.title = `NewsSpy ${this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)}`
+    document.title = `NewsSpy ${
+      this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)
+    }`;
   }
 
- 
+  // handlePrevious = async () => {
+  //   this.setState({
+  //     loading: true,
+  //     page: this.state.page > 1 ? this.state.page - 1 : this.state.page,
+  //   });
+  //   this.handlePages(
+  //     this.state.page > 1 ? this.state.page - 1 : this.state.page
+  //   );
+  // };
 
-  handlePrevious = async () => {
+  fetchMoreData = async () => {
     this.setState({
       loading: true,
-      page: this.state.page > 1 ? this.state.page - 1 : this.state.page,
+      page: this.state.page + 1,
     });
-    this.handlePages(
-      this.state.page > 1 ? this.state.page - 1 : this.state.page
-    );
+    let apiUrl = `https://newsapi.org/v2/top-headlines?country=in&category=${
+      this.props.category
+    }&apiKey=50bc9a02b6d54bbe956ed6c6f40f37f4&page=${
+      this.state.page + 1
+    }&pagesize=${this.props.pagesize}`;
+    let data = await fetch(apiUrl);
+    let parsedData = await data.json();
+    this.setState({
+      articles: this.state.articles.concat(parsedData.articles),
+      loading: false,
+      totalResults: parsedData.totalResults,
+    });
   };
 
-  handleNext = async () => {
-    this.setState({
-      loading: true,
-      page:
-        Math.ceil(this.state.totalResults / this.props.pagesize) >=
-        this.state.page + 1
-          ? this.state.page + 1
-          : this.state.page,
-    });
-    this.handlePages(
-      Math.ceil(this.state.totalResults / this.props.pagesize) >=
-        this.state.page + 1
-        ? this.state.page + 1
-        : this.state.page
-    );
-  };
+  // handleNext = async () => {
+  //   this.setState({
+  //     loading: true,
+  //     page:
+  //       Math.ceil(this.state.totalResults / this.props.pagesize) >=
+  //       this.state.page + 1
+  //         ? this.state.page + 1
+  //         : this.state.page,
+  //   });
+  //   this.handlePages(
+  //     Math.ceil(this.state.totalResults / this.props.pagesize) >=
+  //       this.state.page + 1
+  //       ? this.state.page + 1
+  //       : this.state.page
+  //   );
+  // };
 
   render() {
     return (
       <div>
         <div className="container my-4">
-          <h2 className="text-center">NewsSpy - Top {this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)} Headlines</h2>
+          <h2 className="text-center">
+            NewsSpy - Top{" "}
+            {this.props.category.charAt(0).toUpperCase() +
+              this.props.category.slice(1)}{" "}
+            Headlines
+          </h2>
+
           <div className="row">
             {this.state.articles.map((element) => {
               return (
@@ -115,8 +139,16 @@ export default class News extends Component {
               );
             })}
           </div>
+
+          <InfiniteScroll
+            dataLength={this.state.articles.length}
+            next={this.fetchMoreData}
+            hasMore={this.articles.length !== this.state.totalResults}
+            // loader={this.state.loading && <Spinner />}
+          ></InfiniteScroll>
+
           {this.state.loading && <Spinner />}
-          <div className="d-flex justify-content-between my-4">
+          {/* <div className="d-flex justify-content-between my-4">
             <button
               type="button"
               className="btn btn-primary"
@@ -141,7 +173,7 @@ export default class News extends Component {
             >
               Next &rarr;
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     );

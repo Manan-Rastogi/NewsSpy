@@ -15,43 +15,43 @@ export default class App extends Component {
             <Route
               exact
               path="/"
-              element={<News pagesize={20} country="in" category="" />}
+              element={<News pagesize={12} country="in" category="" />}
             />
             {/* Concept: Using key here will force rerendering */}
             <Route
               exact
               path="/business"
-              element={<News key="business" pagesize={20} country="in" category="business" />}
+              element={<News key="business" pagesize={12} country="in" category="business" />}
             />
             <Route
               exact
               path="/entertainment"
-              element={<News key="entertainment" pagesize={20} country="in" category="entertainment" />}
+              element={<News key="entertainment" pagesize={12} country="in" category="entertainment" />}
             />
             <Route
               exact
               path="/general"
-              element={<News key="general" pagesize={20} country="in" category="general" />}
+              element={<News key="general" pagesize={12} country="in" category="general" />}
             />
             <Route
               exact
               path="/health"
-              element={<News key="health" pagesize={20} country="in" category="health" />}
+              element={<News key="health" pagesize={12} country="in" category="health" />}
             />
             <Route
               exact
               path="/science"
-              element={<News key="science" pagesize={20} country="in" category="science" />}
+              element={<News key="science" pagesize={12} country="in" category="science" />}
             />
             <Route
               exact
               path="/sports"
-              element={<News key="sports" pagesize={20} country="in" category="sports" />}
+              element={<News key="sports" pagesize={12} country="in" category="sports" />}
             />
             <Route
               exact
               path="/technology"
-              element={<News key="technology" pagesize={20} country="in" category="technology" />}
+              element={<News key="technology" pagesize={12} country="in" category="technology" />}
             />
           </Routes>
         </Router>
