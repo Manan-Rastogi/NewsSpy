@@ -26,6 +26,8 @@ export default class News extends Component {
       page: 1,
       totalResults: 0,
     };
+
+    
   }
 
   handlePages = async (pages) => {
@@ -46,7 +48,10 @@ export default class News extends Component {
       loading: true,
     });
     this.handlePages(1);
+    document.title = `NewsSpy ${this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)}`
   }
+
+ 
 
   handlePrevious = async () => {
     this.setState({
@@ -79,7 +84,7 @@ export default class News extends Component {
     return (
       <div>
         <div className="container my-4">
-          <h2 className="text-center">NewsSpy - Spy of the World</h2>
+          <h2 className="text-center">NewsSpy - Top {this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)} Headlines</h2>
           <div className="row">
             {this.state.articles.map((element) => {
               return (

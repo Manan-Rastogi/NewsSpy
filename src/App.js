@@ -15,7 +15,7 @@ export default class App extends Component {
             <Route
               exact
               path="/"
-              element={<News pagesize={20} country="in" category="general" />}
+              element={<News pagesize={20} country="in" category="" />}
             />
             {/* Concept: Using key here will force rerendering */}
             <Route
