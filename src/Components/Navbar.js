@@ -6,6 +6,7 @@ export default class Navbar extends Component {
     return (
       <>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
+         
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               NewsSpy
